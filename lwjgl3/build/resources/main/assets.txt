@@ -1,4 +1,11 @@
 .gitkeep
+dice.png
+dice1.png
+dice2.png
+dice3.png
+dice4.png
+dice5.png
 Ivory-Coast.png
+logo.png
 player1.png
 R-C.jpg

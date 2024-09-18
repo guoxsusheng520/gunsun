@@ -1,44 +1,23 @@
 package io.github.big.lwjgl3.actor;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class PlayerActor  extends Actor {
+public class LogoActor extends Actor {
     // 用于展示该演员的纹理区域
     private TextureRegion region;
-    private Sprite sprite;
-    private int totalCount = 0;
-    // 初始化 Map 数组
-    Map<String, Float>[] mapArray = new HashMap[27];
-    public PlayerActor() {
-//        super();
-//        this.region = region;
-//        mapArray = new HashMap[{"x":842, "y":137}]
+
+    public LogoActor(TextureRegion region) {
+        super();
+        this.region = region;
 
         // 将演员的宽高设置为纹理区域的宽高（必须设置, 否则宽高默认都为 0, 绘制后看不到）
-//        setSize(this.region.getRegionWidth(), this.region.getRegionHeight());
-        sprite = new Sprite( new Texture(Gdx.files.internal("player1.png")));
-//        sprite.setPosition(849 ,108);
-//        sprite.setSize(50,50);
-    }
+        setSize(this.region.getRegionWidth(), this.region.getRegionHeight());
 
-    private void moveToAction(DiceActor diceActor ){
-        int currentIndex = diceActor.randomNumber + 1 ;
-        totalCount = totalCount + currentIndex;
-
-
-
-        MoveToAction action = Actions.moveTo(150, 300, 1.F);
-
+        // 也可以分开设置
+        // setWidth(this.region.getRegionWidth());
+        // setHeight(this.region.getRegionHeight());
     }
 
     public void setRegion(TextureRegion region) {
@@ -73,13 +52,16 @@ public class PlayerActor  extends Actor {
         super.draw(batch, parentAlpha);
 
         // 如果 region 为 null 或者 演员不可见, 则直接不绘制
-        if (sprite == null || !isVisible()) {
+        if (region == null || !isVisible()) {
             return;
         }
-
-
+        /*
+         * 绘制纹理区域
+         * 将演员中的 位置(position, 即 X, Y 坐标), 缩放和旋转支点(origin), 宽高尺寸, 缩放比, 旋转角度 应用到绘制中,
+         * 最终 batch 会将综合结果绘制到屏幕上
+         */
         batch.draw(
-            sprite,
+            region,
             getX(), getY(),
             getOriginX(), getOriginY(),
             getWidth(), getHeight(),

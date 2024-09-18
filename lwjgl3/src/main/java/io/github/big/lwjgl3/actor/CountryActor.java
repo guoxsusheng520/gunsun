@@ -55,17 +55,6 @@ public class CountryActor extends Actor {
         if (region == null || !isVisible()) {
             return;
         }
-
-		/* 这里选择一个较为复杂的绘制方法进行绘制
-		batch.draw(
-				region,
-				x, y,
-				originX, originY,
-				width, height,
-				scaleX, scaleY,
-				rotation
-		);*/
-
         /*
          * 绘制纹理区域
          * 将演员中的 位置(position, 即 X, Y 坐标), 缩放和旋转支点(origin), 宽高尺寸, 缩放比, 旋转角度 应用到绘制中,
