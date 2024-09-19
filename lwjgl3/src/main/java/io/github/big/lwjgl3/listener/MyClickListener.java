@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.utils.Timer;
 import io.github.big.lwjgl3.actor.DiceActor;
+import io.github.big.lwjgl3.actor.PlayerActor;
 import io.github.big.lwjgl3.listener.inter.MyClickListenerInter;
 
 import java.util.HashMap;
@@ -14,6 +15,13 @@ import java.util.Map;
 import static org.apache.tools.ant.taskdefs.Antlib.TAG;
 
 public class MyClickListener extends MyClickListenerInter {
+
+    private PlayerActor player;
+
+    public MyClickListener(PlayerActor playerActor) {
+        super();
+        player = playerActor;
+    }
 
 //    private Map<String,Object>[] mappoint;
 //    private int integer = 0;
@@ -48,11 +56,13 @@ public class MyClickListener extends MyClickListenerInter {
         if (action.equals("DiceActor")) {
             if (actor instanceof DiceActor) {
                 DiceActor diceActor = (DiceActor) actor;
+
                 // 创建一个定时器，在三秒内每0.1秒切换一次纹理
                 if (diceActor.timer != null) {
                     diceActor.timer.stop(); // 如果计时器正在运行，先停止它
                 } else {
-                    diceActor.startTextureSwitch();
+                   int random =  diceActor.startTextureSwitch();
+
                 }
 
 

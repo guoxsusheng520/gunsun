@@ -5,12 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 public class PlayerActor  extends Actor {
     // 用于展示该演员的纹理区域
@@ -18,9 +17,37 @@ public class PlayerActor  extends Actor {
     private Sprite sprite;
     private int totalCount = 0;
     // 初始化 Map 数组
-    Map<String, Float>[] mapArray = new HashMap[27];
+    private final float[][] mapArray = {
+        {854.0f, 254.0f,0},// totalCount=0
+        {842.0f, 240.0f,0},// totalCount=1
+        {835.0f, 310.0f,0},//totalCount=2
+        {835.0f, 390.0f,0},//totalCount=3
+        {835.0f, 460.0f,2},//totalCount=4
+        {700.0f, 496.0f,0},
+        {619.0f, 494.0f,0},
+        {623.0f, 409.0f,0},
+        {545.0f, 411.0f,0},
+        {469.0f, 412.0f,-2},
+        {386.0f, 413.0f,0},
+        {311.0f, 415.0f,0},
+        {311.0f, 491.0f,1},
+        {241.0f, 487.0f,0},
+        {158.0f, 496.0f,0},
+        {159.0f, 414.0f,-2},
+        {158.0f, 332.0f,0},
+        {233.0f, 333.0f,0},
+        {237.0f, 258.0f,3},
+        {233.0f, 184.0f,0},
+        {234.0f, 108.0f,-2},
+        {315.0f, 101.0f,0},
+        {395.0f, 103.0f,1},
+        {470.0f, 106.0f,0},
+        {545.0f, 103.0f,0},
+        {663.0f, 124.0f,-2},
+        {675.0f, 139,0}
+    };
     public PlayerActor() {
-//        super();
+        super();
 //        this.region = region;
 //        mapArray = new HashMap[{"x":842, "y":137}]
 
@@ -31,15 +58,25 @@ public class PlayerActor  extends Actor {
 //        sprite.setSize(50,50);
     }
 
-    private void moveToAction(DiceActor diceActor ){
-        int currentIndex = diceActor.randomNumber + 1 ;
-        totalCount = totalCount + currentIndex;
 
-
-
-        MoveToAction action = Actions.moveTo(150, 300, 1.F);
-
+    public void move(int steps,Boolean forward){
+        SequenceAction sequence = new SequenceAction();
+        if(forward){
+            for (int i = 1; i < steps+1; i++) {
+                ++totalCount;
+                float x = mapArray[totalCount][0] ;
+                float y = mapArray[totalCount][1] ;
+                System.out.println(totalCount);
+                sequence.addAction(Actions.moveTo(x, y, 0.2F));
+                if(i<steps){
+                    sequence.addAction(Actions.delay(0.2F));
+                }
+            }
+            this.addAction(sequence);
+        }
     }
+
+
 
     public void setRegion(TextureRegion region) {
         this.region = region;

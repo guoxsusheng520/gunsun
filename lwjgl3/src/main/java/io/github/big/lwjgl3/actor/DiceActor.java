@@ -16,16 +16,18 @@ public class DiceActor extends Actor {
     private TextureRegion region;
     // 假设你有多个纹理要切换
     private Texture[] textures;
-
+    private PlayerActor player1;
     public Timer timer; // 用于控制纹理切换的计时器
 //    private TextureRegion[] textures;
 
     private int currentIndex;
 
     private float switchInterval = 0.1f; // 纹理切换间隔
-    private float totalDuration = 3.0f; // 总持续时间
+    private float totalDuration = 1.0f; // 总持续时间
     public int randomNumber = 0;
-    public DiceActor(int currentTextureIndex) {
+    public DiceActor(int currentTextureIndex,PlayerActor playerActor) {
+//        super();
+        player1 = playerActor;
         currentIndex = currentTextureIndex;
         // 初始化纹理数组
         textures = new Texture[]{
@@ -46,9 +48,10 @@ public class DiceActor extends Actor {
         currentIndex = (currentIndex + 1) % textures.length; // 循环切换纹理
         sprite.setTexture(textures[currentIndex]);
     }
-    public void startTextureSwitch() {
+    public int startTextureSwitch() {
         // 创建一个计时器任务
         timer = new Timer();
+        final int[] randomNumberHolder = new int[1];
         timer.scheduleTask(new Timer.Task() {
             private float elapsedTime = 0;
 
@@ -63,8 +66,11 @@ public class DiceActor extends Actor {
                     Random random = new Random();
                     int min = 0;
                     int max = 5;
-                    randomNumber = random.nextInt(max - min + 1) + min;
-                    sprite.setTexture(textures[randomNumber]);
+                    randomNumberHolder[0] = random.nextInt(max - min + 1) + min;
+                    sprite.setTexture(textures[randomNumberHolder[0]]);
+//                    player1.moveTo(randomNumberHolder[0] + 1);
+                    player1.move(2,true);
+
                 } else {
                     // 每次切换纹理
                     switchTexture();
@@ -72,6 +78,7 @@ public class DiceActor extends Actor {
                 }
             }
         }, 0, switchInterval); // 从0秒开始，每switchInterval秒执行一次
+        return randomNumberHolder[0]; // 返回随机数
     }
     public void setRegion(TextureRegion region) {
         this.region = region;

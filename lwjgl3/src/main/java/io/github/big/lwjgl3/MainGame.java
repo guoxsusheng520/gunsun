@@ -28,7 +28,7 @@ public class MainGame extends Game {
         gameScreen = new GameScreen();
 
         // 设置当前场景为开始场景
-        setScreen(startScreen);
+        setScreen(gameScreen);
     }
 
     /**

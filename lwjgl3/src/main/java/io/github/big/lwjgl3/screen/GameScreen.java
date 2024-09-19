@@ -41,12 +41,13 @@ public class GameScreen extends ScreenAdapter {
 
         // 创建游戏人物演员
         manActor = new CountryActor(new TextureRegion(manTexture)); //地图
-        diceActor = new DiceActor(currentTextureIndex);//骰子
         playerActor = new PlayerActor();//玩家
+        diceActor = new DiceActor(currentTextureIndex,playerActor);//骰子
+
 
         //点击事件
-        diceActor.addListener(new MyClickListener());
-        manActor.addListener(new MyClickListener());
+        diceActor.addListener(new MyClickListener(playerActor));
+        manActor.addListener(new MyClickListener(playerActor));
 
         //骰子位置
         diceActor.setBounds(926,65,50,50);

@@ -56,15 +56,15 @@ public class StartScreen implements Screen {
     @Override
     public void render(float delta) {
         // 累计渲染时间步
-        deltaSum += delta;
-
-        if (deltaSum >= 3.0F) {
-            // 开始场景展示时间超过 3 秒, 通知 MainGame 切换场景（启动主游戏界面）
-            if (mainGame != null) {
-                mainGame.showGameScreen();
-                return;
-            }
-        }
+//        deltaSum += delta;
+//
+//        if (deltaSum >= 3.0F) {
+//            // 开始场景展示时间超过 3 秒, 通知 MainGame 切换场景（启动主游戏界面）
+//            if (mainGame != null) {
+//                mainGame.showGameScreen();
+//                return;
+//            }
+//        }
 
         // 使用淡蓝色清屏
         Gdx.gl.glClearColor(0.75F, 1, 0.98F, 1);
